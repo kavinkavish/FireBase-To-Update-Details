@@ -1,0 +1,97 @@
+//program code in BasicActivity MainActivity
+
+public class Main3Activity extends AppCompatActivity {
+
+
+    EditText editTextName;
+
+    DatabaseReference databaseadd;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main3);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        databaseadd = FirebaseDatabase.getInstance().getReference("Data");
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+ editTextName = findViewById(R.id.editTextName);
+
+        Button update =findViewById(R.id.button3);
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adddata();
+
+            }
+        });
+    }
+
+    private void adddata(){
+        String name = editTextName.getText().toString().trim();
+
+        if(!TextUtils.isEmpty(name)){
+
+            String id =databaseadd.push().getKey();
+
+            adddata name1 = new adddata(id,name);
+
+            databaseadd.child(id).setValue(name1);
+
+            Toast.makeText(this, "Updated", Toast.LENGTH_SHORT).show();
+
+
+
+        }else{
+            Toast.makeText(this, "Please enter the name", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//Creating A New Java class Name adddata 
+
+package com.example.data;
+
+public class adddata {
+
+    String id,name;
+
+    public adddata(){
+
+    }
+
+    public adddata(String id,String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
